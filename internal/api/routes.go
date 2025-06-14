@@ -19,6 +19,7 @@ func SetUpRouter(
 		jobs := api.Group("/jobs")
 		{
 			jobs.POST("/", jobHandler.CreateJob)
+			jobs.GET("/:id", jobHandler.GetJob)
 		}
 	}
 

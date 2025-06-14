@@ -24,3 +24,13 @@ func (s *JobService) CreateJob(ctx context.Context, req *types.CreateJobRequest)
 	response := &types.CreateJobResponse{}
 	return response.FromJob(job), nil
 }
+
+func (s *JobService) GetJob(ctx context.Context, id int64) (*types.GetJobResponse, error) {
+	job, err := s.jobRepo.GetJob(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &types.GetJobResponse{}
+	return response.FromJob(job), nil
+}

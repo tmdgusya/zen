@@ -31,3 +31,29 @@ func (r CreateJobResponse) FromJob(job *gen.Jobs) *CreateJobResponse {
 		CreatedAt:   job.CreatedAt,
 	}
 }
+
+type GetJobResponse struct {
+	ID             int64     `json:"id"`
+	Name           string    `json:"name"`
+	Description    string    `json:"description"`
+	PythonFilePath string    `json:"python_file_path"`
+	CronExpression string    `json:"cron_expression"`
+	IsActive       bool      `json:"is_active"`
+	TimeoutSeconds int64     `json:"timeout_seconds"`
+	MaxRetries     int64     `json:"max_retries"`
+	CreatedAt      time.Time `json:"created_at"`
+}
+
+func (r GetJobResponse) FromJob(job *gen.Jobs) *GetJobResponse {
+	return &GetJobResponse{
+		ID:             job.ID,
+		Name:           job.Name,
+		Description:    job.Description.String,
+		PythonFilePath: job.PythonFilePath,
+		CronExpression: job.CronExpression,
+		IsActive:       job.IsActive,
+		TimeoutSeconds: job.TimeoutSeconds.Int64,
+		MaxRetries:     job.MaxRetries.Int64,
+		CreatedAt:      job.CreatedAt,
+	}
+}

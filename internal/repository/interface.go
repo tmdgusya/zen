@@ -9,4 +9,5 @@ import (
 
 type JobRepositoryInterface interface {
 	CreateJob(ctx context.Context, req *types.CreateJobRequest) (*gen.Jobs, error)
+	GetJob(ctx context.Context, id int64) (*gen.Jobs, error)
 }

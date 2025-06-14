@@ -33,3 +33,12 @@ func (r *JobRepository) CreateJob(ctx context.Context, req *types.CreateJobReque
 
 	return &job, nil
 }
+
+func (r *JobRepository) GetJob(ctx context.Context, id int64) (*gen.Jobs, error) {
+	job, err := r.queries.GetJob(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return &job, nil
+}

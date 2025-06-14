@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/tmdgusya/zen/internal/service"
@@ -36,6 +37,34 @@ func (h *JobHandler) CreateJob(c *gin.Context) {
 
 	job, err := h.jobService.CreateJob(c.Request.Context(), &req)
 
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, job)
+}
+
+// GetJob godoc
+// @Summary      Get a job by ID
+// @Description  Get a job by its unique identifier
+// @Tags         jobs
+// @Accept       json
+// @Produce      json
+// @Param        id  path      int  true  "Job ID"
+// @Success      200  {object}  types.GetJobResponse       "Job retrieved successfully"
+// @Failure      400  {object}  map[string]string       "Bad request"
+// @Failure      404  {object}  map[string]string       "Job not found"
+// @Failure      500  {object}  map[string]string       "Internal server error"
+// @Router       /api/jobs/{id} [get]
+func (h *JobHandler) GetJob(c *gin.Context) {
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid job ID"})
+		return
+	}
+
+	job, err := h.jobService.GetJob(c.Request.Context(), id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
