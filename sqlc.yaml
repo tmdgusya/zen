@@ -22,14 +22,12 @@ sql:
         emit_enum_valid_method: true
         emit_all_enum_values: true
         json_tags_case_style: "snake"
-        # 테이블명을 단수형으로 변환 (jobs -> Job)
         inflection_exclude_table_names:
           - "jobs"
           - "job_executions" 
           - "scheduler_state"
           - "distributed_locks"
         overrides:
-          # 컬럼 타입 오버라이드
           - column: "jobs.created_at"
             go_type: "time.Time"
           - column: "jobs.updated_at"
@@ -56,14 +54,5 @@ sql:
             go_type: "time.Time"
           - column: "distributed_locks.heartbeat_at"
             go_type: "time.Time"
-          # Boolean 타입 명시적 설정
           - column: "jobs.is_active"
-            go_type: "bool"version: "2"
-sql:
-  - engine: "postgres"
-    queries: "internal/repository/queries.sql"
-    schema: "internal/repository/schema.sql"
-    gen:
-      go:
-        package: "github.com/tmdgusya/zen/db"
-        out: "db"
+            go_type: "bool"
