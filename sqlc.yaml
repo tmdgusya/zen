@@ -1,0 +1,9 @@
+version: "2"
+sql:
+  - engine: "postgres"
+    queries: "internal/repository/queries.sql"
+    schema: "internal/repository/schema.sql"
+    gen:
+      go:
+        package: "github.com/tmdgusya/zen/db"
+        out: "db"
